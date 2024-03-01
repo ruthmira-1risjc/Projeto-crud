@@ -1,4 +1,3 @@
-
 const fs = require('fs');
 
 // Carregando arquivo .json para uma lista
@@ -13,7 +12,6 @@ function carregarArquivoJSON(caminho) {
     return null;
   }
 }
-const listaObjetos = carregarArquivoJSON(caminhoArquivo);
 
 // Função para exibir Lista dos PINI
 function exibirTodosItens(lista) {
@@ -47,8 +45,11 @@ function excluirPINIsComerciais(lista) {
   return pinisResidenciais;
 }
 
-// Carrega a lista de objetos do arquivo data.json e exibe a lista
-exibirTodosItens(listaObjetos);
+// Chama a função que carrega os dados do data.json em uma lista manipulável
+const listaObjetos = carregarArquivoJSON(caminhoArquivo);
+
+// Chama a função para exibir a lista com todos os PINI
+// exibirTodosItens(listaObjetos);
 
 // Chama a função para obter os PINIs residenciais
 const pinisResidenciais = obterPINIsResidenciais(listaObjetos);
@@ -68,11 +69,11 @@ const pinisSemComerciais = excluirPINIsComerciais(listaObjetos);
 
 
 // CRUD
+
 // CREAT - ADD - PUSH
 function adicionarPINI(lista, novoPINI) {
   lista.push(novoPINI);
 }
-// NOVO PINI
 const novoPINI = {
   "ID": 10,
   "Nome": "Novo Residencial",
@@ -80,10 +81,6 @@ const novoPINI = {
   "DescricaoCombo": "Novo Residencial",
   "Valor": 2500.00
 };
-adicionarPINI(listaObjetos, novoPINI);
-
-
-exibirTodosItens(listaObjetos);
 
 
 // UPDATE - EDIT - FINDINDEX
@@ -98,29 +95,25 @@ const novosDados = {
   "Nome": "Residencial Atualizado",
   "Valor": 2000.00
 };
-atualizarPINI(listaObjetos, idParaAtualizar, novosDados);
 
 
-exibirTodosItens(listaObjetos);
-
-
-// // LIST - READ ALL
-// // Função para listar todos
-// function listarTodosPINIs(lista) {
-//   console.log('Todos os PINIs:');
-//   lista.forEach(objeto => {
-//     console.log(`ID: ${objeto.ID}, Nome: ${objeto.Nome}, Valor: ${objeto.Valor}`);
-//   });
-// }
+// LIST - READ ALL
+// Função para listar todos
+function listarTodosPINIs(lista) {
+  console.log('Todos os PINIs:');
+  lista.forEach(objeto => {
+    console.log(`ID: ${objeto.ID}, Nome: ${objeto.Nome}, Valor: ${objeto.Valor}`);
+  });
+}
 // listarTodosPINIs(listaObjetos);
 
 
-// // LIST - READ ESPECIFIC
-// // Função para listar um específico
-// function obterPINIPorID(lista, id) {
-//   return lista.find(objeto => objeto.ID === id);
-// }
-// const idProcurado = 3;
+// LIST - READ ESPECIFIC
+// Função para listar um específico
+function obterPINIPorID(lista, id) {
+  return lista.find(objeto => objeto.ID === id);
+}
+const idProcurado = 3;
 // const piniEncontrado = obterPINIPorID(listaObjetos, idProcurado);
 // console.log(piniEncontrado);
 
@@ -134,7 +127,15 @@ function excluirPINI(lista, id) {
   } 
 }
 const idParaExcluir = 10;
+
+adicionarPINI(listaObjetos, novoPINI);
+// exibirTodosItens(listaObjetos);
+
+atualizarPINI(listaObjetos, idParaAtualizar, novosDados);
+// exibirTodosItens(listaObjetos);
+
 excluirPINI(listaObjetos, idParaExcluir);
+// exibirTodosItens(listaObjetos);
 
 
-exibirTodosItens(listaObjetos);
+// RESULTADO
