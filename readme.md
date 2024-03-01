@@ -36,6 +36,13 @@ npm install redis
 code .
 ~~~~
 
+## Para executar o código-fonte
+
+**Para inciar sua aplicação, lembre de estar na pasta correta**
+
+No terminal digite o comando: 
+```node index.js```
+
 ## Adicionando carga inicial
 
 Crie uma pasta para armazenar sua carga inicial '``` data.json```'
@@ -59,12 +66,6 @@ Crie uma pasta para armazenar sua carga inicial '``` data.json```'
 ]
 ~~~
 
-## Para inciar sua aplicação, lembre de estar na pasta correta
-
-```node index.js```
-
-## Executando os Exercícios
-
 ### Adicionando um arquivo .json e armazenando os objetos em uma lista....
 
 ~~~ Javascript
@@ -87,6 +88,78 @@ function carregarArquivoJSON(caminho) {
   }
 }
 ~~~
+
+# CRUD 
+
+### Adicionar novo PINI
+~~~ JavaScript
+// CREAT - ADD - PUSH
+function adicionarPINI(lista, novoPINI) {
+  lista.push(novoPINI);
+}
+
+// NOVO PINI
+const novoPINI = {
+  "ID": 10,
+  "Nome": "Novo Residencial",
+  "Descricao": "Teste de novo PINI",
+  "DescricaoCombo": "Novo Residencial",
+  "Valor": 2500.00
+};
+
+adicionarPINI(listaObjetos, novoPINI);
+
+~~~
+
+
+### Editando PINI
+~~~ JavaScript
+// UPDATE - EDIT - FINDINDEX
+function atualizarPINI(lista, id, novosDados) {
+  const index = lista.findIndex(objeto => objeto.ID === id);
+
+  if (index !== -1) {
+    // Atualiza os dados do PINI encontrado
+    lista[index] = { ...lista[index], ...novosDados };
+  }
+}
+
+// Editando PINI de ID 10
+const idParaAtualizar = 10;
+const novosDados = {
+  "Nome": "Residencial Atualizado",
+  "Valor": 2000.00
+};
+
+atualizarPINI(listaObjetos, idParaAtualizar, novosDados);
+~~~
+
+### Listando PINI
+~~~ JavaScript
+function listarTodosPINIs(lista) {
+  console.log('Todos os PINIs:');
+  lista.forEach(objeto => {
+    console.log(`ID: ${objeto.ID}, Nome: ${objeto.Nome}, Valor: ${objeto.Valor}`);
+  });
+}
+listarTodosPINIs(listaObjetos);
+~~~
+
+
+### Deletando PINI
+~~~ JavaScript
+// DELETE - EXCLUIR - SPLICE
+function excluirPINI(lista, id) {
+  const index = lista.findIndex(objeto => objeto.ID === id);
+  if (index !== -1) { lista.splice(index, 1);
+  }
+}
+const idParaExcluir = 10;
+
+excluirPINI(listaObjetos, idParaExcluir);
+~~~
+
+# Exercícios
 
 ## Manipulando a lista
 
@@ -201,7 +274,6 @@ Valor médio dos PINIs: 2118.39
 ### Exercicio 4: criar função para excluir todos os PINI comerciais....
 
 ~~~ JavaScript
-
 function excluirPINIsComerciais(lista) {
   // Filtra os objetos que não têm "Comercial" no nome
   const pinisResidenciais = lista.filter(objeto => !objeto.Nome.includes("Comercial"));
@@ -253,74 +325,5 @@ PINIs sem comerciais: [
 ]
 ~~~
 
-## CRUD 
-
-### Adicionar novo PINI
-~~~ JavaScript
-// CREAT - ADD - PUSH
-function adicionarPINI(lista, novoPINI) {
-  lista.push(novoPINI);
-}
-
-// NOVO PINI
-const novoPINI = {
-  "ID": 10,
-  "Nome": "Novo Residencial",
-  "Descricao": "Teste de novo PINI",
-  "DescricaoCombo": "Novo Residencial",
-  "Valor": 2500.00
-};
-
-adicionarPINI(listaObjetos, novoPINI);
-
-~~~
-
-
-### Editando PINI
-~~~ JavaScript
-// UPDATE - EDIT - FINDINDEX
-function atualizarPINI(lista, id, novosDados) {
-  const index = lista.findIndex(objeto => objeto.ID === id);
-
-  if (index !== -1) {
-    // Atualiza os dados do PINI encontrado
-    lista[index] = { ...lista[index], ...novosDados };
-  }
-}
-
-// Editando PINI de ID 10
-const idParaAtualizar = 10;
-const novosDados = {
-  "Nome": "Residencial Atualizado",
-  "Valor": 2000.00
-};
-
-atualizarPINI(listaObjetos, idParaAtualizar, novosDados);
-~~~
-
-### Listando PINI
-~~~ JavaScript
-function listarTodosPINIs(lista) {
-  console.log('Todos os PINIs:');
-  lista.forEach(objeto => {
-    console.log(`ID: ${objeto.ID}, Nome: ${objeto.Nome}, Valor: ${objeto.Valor}`);
-  });
-}
-listarTodosPINIs(listaObjetos);
-~~~
-
-
-### Deletando PINI
-~~~ JavaScript
-// DELETE - EXCLUIR - SPLICE
-function excluirPINI(lista, id) {
-  const index = lista.findIndex(objeto => objeto.ID === id);
-  if (index !== -1) { lista.splice(index, 1);
-  }
-}
-const idParaExcluir = 10;
-
-excluirPINI(listaObjetos, idParaExcluir);
-~~~
-
+# Salvar os resultados em uma pasta
 
