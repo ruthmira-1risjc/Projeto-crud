@@ -15,23 +15,29 @@ Salvar os resultados em uma pasta e escrever um pequeno relatório explicando o 
 ## Requisitos
 
 Instalação do Node.js :
-```sudo snap install node --classic --channel=edge```
+
+``` bash
+sudo snap install node --classic --channel=edge
+```
 
 ## Preparando o ambiente
 
-~~~~ python
+~~~~ bash
 # Cria a pasta
 mkdir crud
+
 # Movimenta o terminal para a pasta
 cd crud
+
 # Criar o package.json -> dar enter, enter, ...
 npm init
-# Criar um arquivo index.js
-echo "" > index.js # alternativamente: touch index.js
-# Instalações de módulos
+
+# Instalação de módulos, incluindo o módulo fs
 npm install sequelize
 npm install tedious
 npm install redis
+npm install fs
+
 # Abrir o VSCode
 code .
 ~~~~
@@ -45,8 +51,7 @@ No terminal digite o comando:
 
 ## Adicionando carga inicial
 
-Crie uma pasta para armazenar sua carga inicial '``` data.json```'
-. Adicione os dados no arquivo :
+Crie uma pasta para armazenar sua carga inicial '``` data.json```'.   Adicione os dados no arquivo :
 ~~~ json
 [
   {
@@ -66,7 +71,8 @@ Crie uma pasta para armazenar sua carga inicial '``` data.json```'
 ]
 ~~~
 
-### Adicionando um arquivo .json e armazenando os objetos em uma lista....
+## Adicionando um arquivo .json e armazenando os objetos em uma lista....
+Iremos utilizar o arquivo ``` data.json``` para criar uma lista de objtos (PINI).  
 
 ~~~ Javascript
 // Caminho para o arquivo JSON
@@ -89,7 +95,23 @@ function carregarArquivoJSON(caminho) {
 }
 ~~~
 
-# CRUD 
+Essa ```listaObjetos``` será usada pelas funções para entedermos melhor a manipulação de um banco de dados em memória. 
+
+
+## Exibição da 'listaObjetos'
+Para exibir a lista depois das operações. é possivel usar: 
+
+~~~JavaScript
+// Função para exibir Lista dos PINI
+function exibirTodosItens(lista) {
+  console.log('Todos os itens:', lista);
+}
+// Chama a função para exibir a lista com todos os PINI
+exibirTodosItens(listaObjetos);
+
+~~~
+
+# *CRUD*  
 
 ### Adicionar novo PINI
 ~~~ JavaScript
@@ -159,33 +181,7 @@ const idParaExcluir = 10;
 excluirPINI(listaObjetos, idParaExcluir);
 ~~~
 
-# Exercícios
-
-## Manipulando a lista
-
-Para exibir a lista depois das operações. é possivel usar: 
-
-~~~JavaScript
-// Exibe todos os itens da lista no console
-console.log('Todos os itens:', listaObjetos);
-
-[
-  {
-    ID: 1,
-    Nome: 'Residencial R1',
-    Descricao: '',
-    DescricaoCombo: 'R.1 Residencial Popular (RPQ1)',
-    Valor: 2087.78
-  },
-  {
-    ID: 2,
-    Nome: 'Residencial R2',
-    Descricao: null,
-    DescricaoCombo: 'R.2 Até 70,00 m²',
-    Valor: 1915.97
-  }
-]
-~~~
+## *Exercícios* 
 
 ### Exercício 1 : criar função que utilize as operações de lista para obter os PINIs residenciais....
 
@@ -202,36 +198,6 @@ function obterPINIsResidenciais(lista) {
 const pinisResidenciais = obterPINIsResidenciais(listaObjetos);
 console.log('PINIs Residenciais:', pinisResidenciais);
 
-PINIs Residenciais: [
-  {
-    ID: 1,
-    Nome: 'Residencial R1',
-    Descricao: '',
-    DescricaoCombo: 'R.1 Residencial Popular (RPQ1)',
-    Valor: 2087.78
-  },
-  {
-    ID: 2,
-    Nome: 'Residencial R2',
-    Descricao: null,
-    DescricaoCombo: 'R.2 Até 70,00 m²',
-    Valor: 1915.97
-  },
-  {
-    ID: 3,
-    Nome: 'Residencial R3',
-    Descricao: null,
-    DescricaoCombo: 'R.3 De 70,01 m² até 300,00 m²',
-    Valor: 2350.63
-  },
-  {
-    ID: 4,
-    Nome: 'Residencial R4',
-    Descricao: null,
-    DescricaoCombo: 'R.4 Acima de 300,01 m²',
-    Valor: 2852.05
-  }
-]
 ~~~
 
 ### Exercício 2 : criar função que utilize as operações de lista para obter o id de todos os PINI com valor inferior a 2000.00....
@@ -249,8 +215,6 @@ function obterIDsPINIsComValorInferior(lista, valorLimite) {
 const idsPINIsComValorInferior = obterIDsPINIsComValorInferior(listaObjetos, 2000.00);
 console.log('IDs dos PINIs com valor inferior a 2000.00:', idsPINIsComValorInferior);
 
-
-IDs dos PINIs com valor inferior a 2000.00: [ 2, 5, 9 ]
 ~~~
 
 ### Exercício 3: criar função que utilize as operações de lista para obter o valor médio dos PINI....
@@ -268,7 +232,6 @@ function obterValorMedioPini(lista) {
 const valorMedio = obterValorMedioPini(listaObjetos);
 console.log('Valor médio dos PINIs:', valorMedio.toFixed(2));
 
-Valor médio dos PINIs: 2118.39
 ~~~
 
 ### Exercicio 4: criar função para excluir todos os PINI comerciais....
@@ -285,45 +248,31 @@ function excluirPINIsComerciais(lista) {
 const pinisSemComerciais = excluirPINIsComerciais(listaObjetos);
 console.log('PINIs sem comerciais:', pinisSemComerciais);
 
-
-PINIs sem comerciais: [
-  {
-    ID: 1,
-    Nome: 'Residencial R1',
-    Descricao: '',
-    DescricaoCombo: 'R.1 Residencial Popular (RPQ1)',
-    Valor: 2087.78
-  },
-  {
-    ID: 2,
-    Nome: 'Residencial R2',
-    Descricao: null,
-    DescricaoCombo: 'R.2 Até 70,00 m²',
-    Valor: 1915.97
-  },
-  {
-    ID: 3,
-    Nome: 'Residencial R3',
-    Descricao: null,
-    DescricaoCombo: 'R.3 De 70,01 m² até 300,00 m²',
-    Valor: 2350.63
-  },
-  {
-    ID: 4,
-    Nome: 'Residencial R4',
-    Descricao: null,
-    DescricaoCombo: 'R.4 Acima de 300,01 m²',
-    Valor: 2852.05
-  },
-  {
-    ID: 9,
-    Nome: 'Industrial',
-    Descricao: null,
-    DescricaoCombo: 'I.1 Industrial - Galpão de uso geral',
-    Valor: 1117.18
-  }
-]
 ~~~
 
-# Salvar os resultados em uma pasta
+## Salvar os resultados em uma pasta
+
+Nessa função iremos organizar os resultados das funções criando JSON em uma pasta especifica, 
+a cada invocação de uma função que manipule a lista inicial iremos chamar a função '``` salvarListaEmNovaPasta ```'
+
+~~~ JavaScript
+// Função para salvar a lista em um novo arquivo JSON em uma pasta específica
+function salvarListaEmNovaPasta(lista, nomeArquivo, pastaDestino) {
+  try {
+    // Cria a pasta de destino se não existir
+    if (!fs.existsSync(pastaDestino)) {
+      fs.mkdirSync(pastaDestino, { recursive: true });
+    }
+
+    const caminhoCompleto = path.join(pastaDestino, nomeArquivo);
+    const jsonLista = JSON.stringify(lista, null, 2);
+    fs.writeFileSync(caminhoCompleto, jsonLista);
+    console.log(`Lista salva em ${caminhoCompleto}`);
+  } catch (erro) {
+    console.error('Erro ao salvar o arquivo JSON:', erro);
+  }
+}
+~~~
+
+# Conhecimentos Adquiridos 
 

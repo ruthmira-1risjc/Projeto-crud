@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 
 // Carregando arquivo .json para uma lista
 const caminhoArquivo = 'data.json';
@@ -12,16 +13,26 @@ function carregarArquivoJSON(caminho) {
     return null;
   }
 }
+const listaObjetos = carregarArquivoJSON(caminhoArquivo);
 
-// Função para exibir Lista dos PINI
-function exibirTodosItens(lista) {
-  console.log('Todos os itens:', lista);
-}
+////////////////////////////////////// EXERCICIOS //////////////////////////////////////
 
 // Função para exibir lista de PINI  "Residencial"
 function obterPINIsResidenciais(lista) {
   return lista.filter(objeto => objeto.Nome.includes("Residencial"));
 }
+const pinisResidenciais = obterPINIsResidenciais(listaObjetos);
+salvarListaEmNovaPasta(pinisResidenciais, 'pinisResidenciais.json', './resultado');
+
+
+// Função para excluir tosdos os PINI comerciais de uma lista
+function excluirPINIsComerciais(lista) {
+  const pinisSemComerciais = lista.filter(objeto => !objeto.Nome.includes("Comercial"));
+
+  return pinisSemComerciais;
+}
+const pinisSemComerciais = excluirPINIsComerciais(listaObjetos);
+salvarListaEmNovaPasta(pinisSemComerciais, 'pinisSemComerciais.json', './resultado');
 
 // Função para obter os IDs dos PINIs com valor inferior a 2000.00
 function obterIDsPINIsComValorInferior(lista, valorLimite) {
@@ -29,6 +40,8 @@ function obterIDsPINIsComValorInferior(lista, valorLimite) {
   const idsPINIsComValorInferior = pinisComValorInferior.map(objeto => objeto.ID);
   return idsPINIsComValorInferior;
 }
+const idsPINIsComValorInferior = obterIDsPINIsComValorInferior(listaObjetos, 2000.00);
+salvarListaEmNovaPasta(idsPINIsComValorInferior, 'idsPINIsComValorInferior.json', './resultado');
 
 // Função para exibir o Valor Médio de todos os PINI
 function obterValorMedioPini(lista) {
@@ -37,38 +50,22 @@ function obterValorMedioPini(lista) {
 
   return valorMedio;
 }
-
-// Função para excluir tosdos os PINI comerciais de uma lista
-function excluirPINIsComerciais(lista) {
-  const pinisResidenciais = lista.filter(objeto => !objeto.Nome.includes("Comercial"));
-
-  return pinisResidenciais;
-}
-
-// Chama a função que carrega os dados do data.json em uma lista manipulável
-const listaObjetos = carregarArquivoJSON(caminhoArquivo);
-
-// Chama a função para exibir a lista com todos os PINI
-// exibirTodosItens(listaObjetos);
-
-// Chama a função para obter os PINIs residenciais
-const pinisResidenciais = obterPINIsResidenciais(listaObjetos);
-// console.log('PINIs Residenciais:', pinisResidenciais);
-
-// Chama a função para obter os IDs dos PINIs com valor inferior a 2000.00
-const idsPINIsComValorInferior = obterIDsPINIsComValorInferior(listaObjetos, 2000.00);
-// console.log('IDs dos PINIs com valor inferior a 2000.00:', idsPINIsComValorInferior);
-
-// Chama a função para obter o valor médio dos PINIs
 const valorMedio = obterValorMedioPini(listaObjetos);
-// console.log('Valor médio dos PINIs:', valorMedio.toFixed(2));
-
-// Chama a função para excluir os PINIs comerciais
-const pinisSemComerciais = excluirPINIsComerciais(listaObjetos);
-// console.log('PINIs sem comerciais:', pinisSemComerciais);
+salvarListaEmNovaPasta([{ "ValorMedio": valorMedio.toFixed(2) }], 'valorMedio.json', './resultado');
 
 
-// CRUD
+////////////////////////////////////// CRUD //////////////////////////////////////
+
+// LIST - READ ALL
+// Função para listar todos
+function listarTodosPINIs(lista) {
+  console.log('Todos os PINIs:');
+  lista.forEach(objeto => {
+    console.log(`ID: ${objeto.ID}, Nome: ${objeto.Nome}, Valor: ${objeto.Valor}`);
+  });
+}
+// listarTodosPINIs(listaObjetos);
+salvarListaEmNovaPasta(listaObjetos, 'listarPini.json', './resultado')
 
 // CREAT - ADD - PUSH
 function adicionarPINI(lista, novoPINI) {
@@ -81,6 +78,9 @@ const novoPINI = {
   "DescricaoCombo": "Novo Residencial",
   "Valor": 2500.00
 };
+
+adicionarPINI(listaObjetos, novoPINI);
+salvarListaEmNovaPasta(listaObjetos, 'novoPini.json', './resultado');
 
 
 // UPDATE - EDIT - FINDINDEX
@@ -96,16 +96,8 @@ const novosDados = {
   "Valor": 2000.00
 };
 
-
-// LIST - READ ALL
-// Função para listar todos
-function listarTodosPINIs(lista) {
-  console.log('Todos os PINIs:');
-  lista.forEach(objeto => {
-    console.log(`ID: ${objeto.ID}, Nome: ${objeto.Nome}, Valor: ${objeto.Valor}`);
-  });
-}
-// listarTodosPINIs(listaObjetos);
+atualizarPINI(listaObjetos, idParaAtualizar, novosDados);
+salvarListaEmNovaPasta(listaObjetos, 'atualizarPini.json', './resultado');
 
 
 // LIST - READ ESPECIFIC
@@ -114,8 +106,8 @@ function obterPINIPorID(lista, id) {
   return lista.find(objeto => objeto.ID === id);
 }
 const idProcurado = 3;
-// const piniEncontrado = obterPINIPorID(listaObjetos, idProcurado);
-// console.log(piniEncontrado);
+const piniEncontrado = obterPINIPorID(listaObjetos, idProcurado);
+salvarListaEmNovaPasta(piniEncontrado, 'listarPiniEspecifico.json', './resultado');
 
 
 // DELETE - EXCLUIR - SPLICE
@@ -128,14 +120,25 @@ function excluirPINI(lista, id) {
 }
 const idParaExcluir = 10;
 
-adicionarPINI(listaObjetos, novoPINI);
-// exibirTodosItens(listaObjetos);
-
-atualizarPINI(listaObjetos, idParaAtualizar, novosDados);
-// exibirTodosItens(listaObjetos);
-
 excluirPINI(listaObjetos, idParaExcluir);
-// exibirTodosItens(listaObjetos);
+salvarListaEmNovaPasta(listaObjetos, 'deletarPini.json', './resultado');
 
 
-// RESULTADO
+////////////////////////////////////// RESULTADO //////////////////////////////////////
+
+// Função para salvar a lista em um novo arquivo JSON em uma pasta específica
+function salvarListaEmNovaPasta(lista, nomeArquivo, pastaDestino) {
+  try {
+    // Cria a pasta de destino se não existir
+    if (!fs.existsSync(pastaDestino)) {
+      fs.mkdirSync(pastaDestino, { recursive: true });
+    }
+
+    const caminhoCompleto = path.join(pastaDestino, nomeArquivo);
+    const jsonLista = JSON.stringify(lista, null, 2);
+    fs.writeFileSync(caminhoCompleto, jsonLista);
+    console.log(`Lista salva em ${caminhoCompleto}`);
+  } catch (erro) {
+    console.error('Erro ao salvar o arquivo JSON:', erro);
+  }
+}
