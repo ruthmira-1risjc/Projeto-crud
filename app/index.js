@@ -142,3 +142,4 @@ function salvarListaEmNovaPasta(lista, nomeArquivo, pastaDestino) {
     console.error('Erro ao salvar o arquivo JSON:', erro);
   }
 }
+

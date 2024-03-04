@@ -276,3 +276,26 @@ function salvarListaEmNovaPasta(lista, nomeArquivo, pastaDestino) {
 
 # Conhecimentos Adquiridos 
 
+No início do meu código, os dados são carregados de um arquivo JSON (data.json) para a memória. Isso cria uma representação dos dados em uma estrutura de dados na linguagem JavaScript, uma lista de objetos.
+
+Operações de Consulta e Filtragem:\
+Funções como obterPINIsResidenciais, excluirPINIsComerciais, obterIDsPINIsComValorInferior realizam operações de filtragem na lista de objetos em memória. Elas retornam subconjuntos dos dados originais baseados em condições específicas.\
+No caso da função obterIDsPINIsComValorInferior realiza uma filtragem e mapeamento nos dados originais para extrair apenas os IDs dos PINIs com valores inferiores a um limite.
+
+Operações de Agregação:\
+A função obterValorMedioPini realiza uma operação de agregação. Ela calcula o valor médio de uma propriedade (Valor) de todos os objetos na lista.
+
+Operações de Atualização e Modificação:\
+As funções como adicionarPINI, atualizarPINI, e excluirPINI realizam operações que modificam diretamente os dados em memória. Elas adicionam, atualizam ou removem elementos da lista.
+
+Persistência de Dados:\
+Os resultados das operações são persistidos em arquivos JSON utilizando a função salvarListaEmNovaPasta. Essa operação de salvamento não apenas armazena os dados no sistema de arquivos, mas também reflete quaisquer modificações feitas na memória.
+
+Conclusão:
+A manipulação de dados em memória envolve uma série de operações que podem incluir leitura, filtragem, transformação, agregação e modificação de dados. Essas operações são executadas diretamente nos dados carregados na memória principal do programa. Uma vez que as operações são concluídas, os resultados podem ser persistidos em armazenamento permanente, como arquivos, bancos de dados ou outros meios de armazenamento. Isso permite que as aplicações processem e modifiquem dados temporariamente antes de tornar essas mudanças persistentes.
+
+
+
+
+
+
